@@ -41,25 +41,36 @@ public class Course {
 
     }
 
-    public void printSubCategories(){
+    public String printSubCategories(){
+        StringBuilder sb = new StringBuilder();
         for (String sc : this.subCategories) {
-            System.out.print(sc +";");
+            sb.append(sc +";");
         }
+        return sb.toString();
     }
     public void creatCourse(String[] list){
         Course course = new Course();
         course.setCourseCode(Integer.valueOf(list[0]));
         course.setName(list[1]);
-        String []startD = list[2].split(".");
-        LocalDate st = LocalDate.of(Integer.valueOf(startD[2]),Integer.valueOf(startD[1]),Integer.valueOf(startD[0]));
-        course.setStartDate(st);
-        String []endD = list[3].split(".");
-        LocalDate en = LocalDate.of(Integer.valueOf(startD[2]),Integer.valueOf(startD[1]),Integer.valueOf(startD[0]));
-        course.setEndDate(en);
+        if(list[2].isEmpty()){}
+        else {
+            String[] startD = list[2].split(".");
+            LocalDate st = LocalDate.of(Integer.valueOf(startD[2]), Integer.valueOf(startD[1]), Integer.valueOf(startD[0]));
+            course.setStartDate(st);
+        }
+        if(list[3].isEmpty()){}
+        else {
+            String[] endD = list[3].split(".");
+            LocalDate en = LocalDate.of(Integer.valueOf(endD[2]), Integer.valueOf(endD[1]), Integer.valueOf(endD[0]));
+            course.setEndDate(en);
+        }
         course.setLocation(list[4]);
         course.setMaterialType(list[5]);
         course.setDescription(list[6]);
-        course.setMathCode(Boolean.valueOf(list[7]));
+        if(list[7].isEmpty()){}
+        else{
+            course.setMathCode(Boolean.valueOf(list[7]));
+        }
         course.setMainCategory(list[8]);
         List<String> sc = new ArrayList<>();
         int index = 9;
@@ -75,7 +86,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return courseCode +";" +name +";" +startDate +";" +endDate +";";
+        return courseCode +";" +name +";" +startDate +";" +endDate +";" +location +";" +materialType +";" +description +";" +mathCode +";" +mainCategory +";" +printSubCategories();
     }
 
     public int getCourseCode() {
