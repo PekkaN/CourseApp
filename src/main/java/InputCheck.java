@@ -1,3 +1,4 @@
+import jdk.swing.interop.SwingInterOpUtils;
 import org.w3c.dom.ls.LSOutput;
 
 import java.time.LocalDate;
@@ -7,19 +8,22 @@ import java.util.List;
 import java.util.Date;
 
 public class InputCheck {
-private String rivi;
-private String courseCode;
-private String name;
-private String startDate;
-private String endDate;
-private String location;
-private String materialType;
-private String description;
-private String matCode;
-private String mainCategory;
-private String subCategory;
-private String subCategory2;
-private boolean pass;
+    private String rivi;
+    private String courseCode;
+    private String name;
+    private String startDate;
+    private String endDate;
+    private String location;
+    private String materialType;
+    private String description;
+    private String matCode;
+    private String mainCategory;
+    private String subCategory;
+    private String subCategory2;
+    private boolean pass;
+
+
+    private String errorMessage;
 
     /*
     CourseCode: kurssin yksilöllinen tunniste
@@ -43,26 +47,25 @@ private boolean pass;
     //String rivi = "1;2;3;4;5;6;7;8;9;10;11";
 
     public void splitLine() throws NullPointerException {
-    try{
-        String[] parts = rivi.split(";");
-        if(parts.length>9) {
-            this.courseCode = parts[0]; // 1
-            this.name = parts[1]; // 2
-            this.startDate = parts[2]; // 3
-            this.endDate = parts[3]; // 4
-            this.location = parts[4]; // 5
-            this.materialType = parts[5]; // 6
-            this.description = parts[6]; // 7
-            this.matCode = parts[7]; // 8
-            this.mainCategory = parts[8]; // 9
-            this.subCategory = parts[9]; // 10
-            this.subCategory2 = parts[10]; // 11
-        }
-        else {
-            this.pass=false;
-        }
-        }
-        catch(Exception e) {
+        try {
+            String[] parts = rivi.split(";");
+            if (parts.length > 9) {
+                this.courseCode = parts[0]; // 1
+                this.name = parts[1]; // 2
+                this.startDate = parts[2]; // 3
+                this.endDate = parts[3]; // 4
+                this.location = parts[4]; // 5
+                this.materialType = parts[5]; // 6
+                this.description = parts[6]; // 7
+                this.matCode = parts[7]; // 8
+                this.mainCategory = parts[8]; // 9
+                this.subCategory = parts[9]; // 10
+                this.subCategory2 = parts[10]; // 11
+            } else {
+                this.pass = false;
+                errorMessage += " SARAKE ERROR ";
+            }
+        } catch (Exception e) {
             //  Block of code to handle errors
         }
 
@@ -72,43 +75,53 @@ private boolean pass;
         pass = true;
         if (!courseCodeCheck(courseCode)) {
             this.pass = false;
+            errorMessage += " COURSE CODE ERROR ";
         }
         if (!nameCheck(name)) {
             this.pass = false;
+            errorMessage += " NAME ERROR ";
         }
-        if (!datesCheck(startDate,endDate)) {
+        if (!datesCheck(startDate, endDate)) {
             this.pass = false;
+            errorMessage += " INVALID DATES ERROR ";
         }
         if (!locationCheck(location)) {
             this.pass = false;
+            errorMessage += " LOCATION ERROR ";
         }
         if (!materialTypeCheck(materialType)) {
             this.pass = false;
+            errorMessage += " MATERIAL TYPE ERROR ";
         }
         if (!descriptionCheck()) {
             this.pass = false;
+            errorMessage += " DESCRIPTION TOO LONG ERROR ";
         }
         if (!matCodeCheck(matCode)) {
             this.pass = false;
+            errorMessage += " CODE MATERIAL ERROR ";
         }
         if (!mainCategoryCheck()) {
             this.pass = false;
+            errorMessage += " MAIN CATEGORY MISSING ERROR ";
         }
         if (!subCategoryCheck()) {
             this.pass = false;
+            errorMessage += " SUB GATEGORY MISSING ERROR ";
         }
+        //System.out.println(errorMessage);
         return this.pass;
     }
 
     private boolean subCategoryCheck() {
-        if(this.subCategory == null) {
+        if (this.subCategory == null) {
             return false;
         }
         return true;
     }
 
     private boolean mainCategoryCheck() {
-        if(mainCategory == null) {
+        if (mainCategory == null) {
             return false;
         }
         return true;
@@ -119,12 +132,12 @@ private boolean pass;
     }
 
     private boolean descriptionCheck() {
-        if(description == null) {
+        if (description == null) {
+            return true;
+        } else if (description.length() <= 500) {
             return true;
         }
-        else if(description.length()<=500) {
-            return true;
-        }
+        // System.out.println(description);
         return false;
     }
 
@@ -137,18 +150,18 @@ private boolean pass;
     }
 
     private boolean datesCheck(String startDate, String endDate) {
-      //  if (!startDate.isBlank() || !endDate.isBlank()) {
-        //    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-         //   LocalDate start = LocalDate.parse(startDate, formatter);
-          //  LocalDate end = LocalDate.parse(endDate, formatter);
-         //   LocalDate now = LocalDate.now();
-          //  boolean test = ((start.compareTo(end) >= 0) && (start.compareTo(now) >= 0));
+        if (!startDate.isBlank() || !endDate.isBlank()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate start = LocalDate.parse(startDate, formatter);
+            LocalDate end = LocalDate.parse(endDate, formatter);
+            LocalDate now = LocalDate.now();
+            boolean test = ((start.compareTo(end) >= 0) && (start.compareTo(now) >= 0));
 
-        //    return true;
-    //    }
-        return true;
+            return true;
+             }
+            return true;
+
     }
-
 
 
     private boolean nameCheck(String name) {
@@ -159,5 +172,7 @@ private boolean pass;
         return true;
     }
 
-
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }
