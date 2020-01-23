@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class FileRead {
 
     public void readFile() throws IOException {
-        List<Course> courses = new ArrayList<>();
+        CourseDB courses = new CourseDB();
 
         //Read the courses .csv file
         try (BufferedReader br = new BufferedReader(new FileReader("resources/CourseData_20180901_210145.csv"))) {
@@ -18,7 +18,7 @@ public class FileRead {
                 if(ic.checkAll());{
                     //TODO: Create new Course object and save it to list.
                     Course c = new Course(line.split(";");
-                    courses.add(c);
+                    courses.addCourse(c);
 
                 }
                 else {
@@ -26,6 +26,12 @@ public class FileRead {
                     writeErrorMessage(ic);
                 }
                 linecounter++;
+            }
+            int i = 1;
+            for(Course c : courses) {
+                System.out.println(i);
+                System.out.println(c);
+                i++;
             }
         }
     }
