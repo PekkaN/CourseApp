@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +45,7 @@ public class Course {
 
     public String printSubCategories(){
         StringBuilder sb = new StringBuilder();
+
         if(subCategories.size()==1) {
             return sb.append(subCategories.get(0)).toString();
         }
@@ -78,6 +80,7 @@ public class Course {
             setMathCode(Boolean.valueOf(list[7]));
         }
         setMainCategory(list[8]);
+
         List<String> sc = new ArrayList<>();
         int index = 9;
         while (index < list.length) {
@@ -91,7 +94,9 @@ public class Course {
 
     @Override
     public String toString() {
+
         return courseCode + ";" + name + ";" + startDate + ";" + endDate + ";" + location + ";" + materialType + ";" + description + ";" + mathCode + ";" + mainCategory + ";" + String.join(";", subCategories);
+
     }
 
 
@@ -174,5 +179,12 @@ public class Course {
 
     public void setSubCategories(List<String> subCategories) {
         this.subCategories = subCategories;
+    }
+
+    public String printableCourse() {
+        return "C"+(courseCode-550000+100000) + ";" + name + ";" + startDate +";" +courseDuration() + ";" + location + ";" + materialType + ";" + description + ";" + mathCode + ";" + mainCategory + ";" + String.join(";", subCategories);
+    }
+    public int courseDuration(){
+        return endDate.compareTo(startDate);
     }
 }
