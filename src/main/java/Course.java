@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -178,5 +179,12 @@ public class Course {
 
     public void setSubCategories(List<String> subCategories) {
         this.subCategories = subCategories;
+    }
+
+    public String printableCourse() {
+        return "C"+(courseCode-550000+100000) + ";" + name + ";" + startDate +";" +courseDuration() + ";" + location + ";" + materialType + ";" + description + ";" + mathCode + ";" + mainCategory + ";" + String.join(";", subCategories);
+    }
+    public int courseDuration(){
+        return endDate.compareTo(startDate);
     }
 }
