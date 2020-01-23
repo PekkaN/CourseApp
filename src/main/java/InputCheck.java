@@ -19,21 +19,35 @@ public class InputCheck {
 • SubCategory1 ja SubCategory2: kurssin muut luokittelut
 
      */
+
+    public InputCheck(String rivi) {
+        this.rivi = rivi;
+    }
+
     String rivi = "1;2;3;4;5;6;7;8;9;10;11";
 
+    public void splitLine(String wholeLine) {
 
-    String[] parts = rivi.split(";");
-    String courseCode = parts[0]; // 1
-    String Name = parts[1]; // 2
-    String StartDate = parts[2]; // 3
-    String EndDate = parts[3]; // 4
-    String Location = parts[4]; // 5
-    String MaterialType = parts[5]; // 6
-    String Description = parts[6]; // 7
-    String MatCode = parts[7]; // 8
-    String MaterialType = parts[8]; // 9
-    String MainCategory = parts[9]; // 10
-    String SubCategory = parts[10]; // 11
+        String[] parts = wholeLine.split(";");
+        String courseCode = parts[0]; // 1
+        courseCodeCheck(courseCode);
+        String Name = parts[1]; // 2
+        String StartDate = parts[2]; // 3
+        String EndDate = parts[3]; // 4
+        String Location = parts[4]; // 5
+        String MaterialType = parts[5]; // 6
+        String Description = parts[6]; // 7
+        String MatCode = parts[7]; // 8
+        String MainCategory = parts[8]; // 9
+        String SubCategory = parts[9]; // 10
+
+    }
+
+    public boolean courseCodeCheck(String courseCode){
+        
+
+    }
+
 
 
 
